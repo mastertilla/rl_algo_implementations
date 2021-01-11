@@ -7,7 +7,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 EpisodeStats = namedtuple("Stats",["episode_lengths", "episode_rewards"])
 
-def plot_cost_to_go_mountain_car(env, estimator, num_tiles=20):
+def plot_cost_to_go_mountain_car(env, estimator, name='', num_tiles=20):
     x = np.linspace(env.observation_space.low[0], env.observation_space.high[0], num=num_tiles)
     y = np.linspace(env.observation_space.low[1], env.observation_space.high[1], num=num_tiles)
     X, Y = np.meshgrid(x, y)
@@ -22,7 +22,7 @@ def plot_cost_to_go_mountain_car(env, estimator, num_tiles=20):
     ax.set_zlabel('Value')
     ax.set_title("Mountain \"Cost To Go\" Function")
     fig.colorbar(surf)
-    plt.show()
+    plt.savefig(f'{name}_cost_to_go_mountain_car.png')
 
 
 def plot_value_function(V, title="Value Function"):
@@ -60,14 +60,14 @@ def plot_value_function(V, title="Value Function"):
 
 
 
-def plot_episode_stats(stats, smoothing_window=10, noshow=False):
+def plot_episode_stats(stats, name='', smoothing_window=10, noshow=False):
     # Plot the episode length over time
     fig1 = plt.figure(figsize=(10,5))
     plt.plot(stats.episode_lengths)
     plt.xlabel("Episode")
     plt.ylabel("Episode Length")
     plt.title("Episode Length over Time")
-    plt.savefig('episode_length.png')
+    plt.savefig(f'{name}_episode_length.png')
     if noshow:
         plt.close(fig1)
     else:
@@ -80,7 +80,7 @@ def plot_episode_stats(stats, smoothing_window=10, noshow=False):
     plt.xlabel("Episode")
     plt.ylabel("Episode Reward (Smoothed)")
     plt.title("Episode Reward over Time (Smoothed over window size {})".format(smoothing_window))
-    plt.savefig('episode_reward.png')
+    plt.savefig(f'{name}_episode_reward.png')
     if noshow:
         plt.close(fig2)
     else:
@@ -92,7 +92,7 @@ def plot_episode_stats(stats, smoothing_window=10, noshow=False):
     plt.xlabel("Time Steps")
     plt.ylabel("Episode")
     plt.title("Episode per time step")
-    plt.savefig('episode_per_time_step.png')
+    plt.savefig(f'{name}_episode_per_time_step.png')
     if noshow:
         plt.close(fig3)
     else:
